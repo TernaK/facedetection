@@ -5,7 +5,7 @@
 #include <map>
 #include <fstream>
 
-namespace tkcv {
+namespace tkutil {
 
   class Property {
   public:
@@ -30,10 +30,10 @@ namespace tkcv {
 
   class Config {
   private:
-    std::map<std::string, Property> dict;
+   std::map<std::string, Property> dict;
 
   public:
-    Config();
+    Config() {};
     Config(std::string configFileName);
     bool loadConfigFromFile(std::string fileName);
   };

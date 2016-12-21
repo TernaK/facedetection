@@ -16,3 +16,4 @@ install(TARGETS facedetector DESTINATION lib)
 install(FILES ${facedetector_HEADERS} DESTINATION include)
 
 add_subdirectory(samples)
+add_subdirectory(tests)
