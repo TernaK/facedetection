@@ -1,3 +1,7 @@
+/* description
+  Run tests to verify correct operation of the FaceDetector class
+*/
+
 #include "facedetector.hpp"
 using namespace cv;
 using namespace std;
