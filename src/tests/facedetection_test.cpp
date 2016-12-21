@@ -3,7 +3,8 @@ using namespace cv;
 using namespace std;
 using namespace tkcv;
 
-int main(){
+void test_faceDetection(){
+
   string folder = TEST_IMAGES_PATH;
   Mat image = imread(folder + "faces1.jpg");
 
@@ -22,8 +23,8 @@ int main(){
   printf("image size: %dx%d\n", image.size().width, image.size().height);
   printf("faces detected: %d\n", (int)faces.size());
   printf("detection time: %lldms\n", chrono::duration_cast<chrono::milliseconds>(end - start).count());
+}
 
-  namedWindow("faces");
-  imshow("faces", image);
-  waitKey();
+int main(){
+  test_faceDetection();
 }
