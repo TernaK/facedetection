@@ -1,7 +1,5 @@
 #pragma once
 
-#include "config.hpp"
-
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
