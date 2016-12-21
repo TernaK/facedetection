@@ -13,6 +13,7 @@ FaceDetector::FaceDetector(){
 
 }
 
+
 void FaceDetector::detectFaces(const cv::Mat& image, std::vector<Face>& faces){
   //get gray
   assert(image.type() == CV_8UC3 || image.type() == CV_8U);
