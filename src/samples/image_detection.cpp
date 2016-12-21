@@ -1,3 +1,4 @@
+#include "facedetector.hpp"
 #include <iostream>
 
 int main(){
