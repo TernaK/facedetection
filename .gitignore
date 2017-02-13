@@ -1,2 +1,3 @@
 build/
 .DS_Store
+src/support/shape_predictor_68_face_landmarks.dat
