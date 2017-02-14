@@ -68,7 +68,7 @@ int main() {
 
       // Detect faces 
       std::vector<rectangle> faces = detector(cimg);
-      cout << faces.size() << " faces found!" << endl;
+      cout << faces.size() << " face(s) found!" << endl;
 
       for (auto face: faces) {
         // Find the pose of each face.
