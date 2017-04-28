@@ -10,7 +10,7 @@ set(facedetection_SOURCES ${facedetection_SRCFILES})
 set(facedetection_HEADERS ${facedetection_INCLUDEFILES})
 #please revide the previous two lines with regards to the next line
 add_library(facedetection SHARED ${facedetection_SOURCES} ${facedetection_HEADERS})
-target_link_libraries(facedetection ${Opencv_LIBRARIES} opencv_objdetect)
+target_link_libraries(facedetection ${Opencv_LIBS} opencv_objdetect opencv_video)
 
 install(TARGETS facedetection DESTINATION lib)
 install(FILES ${facedetection_HEADERS} DESTINATION include)
