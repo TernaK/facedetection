@@ -61,12 +61,17 @@ int main(int argc, char *argv[]){
     }
 
     if(startTracking) {
+      // keep estimating the face location
       Measurement predicted = tracker->estimate();
+
+      // if a face was detected then show that
       if(faceDetected)
         DrawBoxInImage(lastFaceCenter, lastFaceSize, frame, Scalar(0,255,0));
+      // otherwise show the estimated face location
       else
         DrawBoxInImage(Point(predicted.data[0], predicted.data[1]), lastFaceSize, frame, Scalar(0,0,255));
     }
+    
     faces.clear();
     imshow("faces", frame);
     if(waitKey(10) == 27) break;
