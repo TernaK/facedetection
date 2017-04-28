@@ -11,7 +11,7 @@ using namespace tkcv;
 void DrawBoxInImage(Point center, Size size, cv::Mat& image, cv::Scalar color=cv::Scalar(255,255,0)) {
   Point tl = Point(center.x-size.width/2, center.y-size.height/2);
   Point br = tl + Point(size.width, size.height);
-  rectangle(image, tl - Point(50,50), br + Point(50,50), color, 2);
+  rectangle(image, tl - Point(80,80), br + Point(80,80), color, 2);
 }
 
 int main(int argc, char *argv[]){
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
   vCap.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
   namedWindow("faces");
 
-  int freq = 5;
+  int minTimeout = 6;
   long timeout = 0;
   Size lastFaceSize;
   Point lastFaceCenter;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]){
         lastFaceCenter = Point(faces[0].center.first, faces[0].center.second);
       }
       else {
-        if(timeout >= freq) {
+        if(timeout >= minTimeout) {
           tracker->update(meas);
           timeout = 0;
           lastFaceSize = Size(faces[0].width, faces[0].height);
@@ -65,16 +65,16 @@ int main(int argc, char *argv[]){
       Measurement predicted = tracker->estimate();
 
       // if a face was detected then show that
-      if(faceDetected)
-        DrawBoxInImage(lastFaceCenter, lastFaceSize, frame, Scalar(0,255,0));
+      // if(faceDetected)
+      //   DrawBoxInImage(lastFaceCenter, lastFaceSize, frame, Scalar(0,255,0));
       // otherwise show the estimated face location
-      else
+      // else
         DrawBoxInImage(Point(predicted.data[0], predicted.data[1]), lastFaceSize, frame, Scalar(0,0,255));
     }
-    
+
     faces.clear();
     imshow("faces", frame);
-    if(waitKey(10) == 27) break;
+    if(waitKey(30) == 27) break;
 
     timeout++;
   }

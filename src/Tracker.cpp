@@ -18,7 +18,7 @@ Tracker::Tracker(Measurement initial, cv::Size frameSize) {
   
   cv::setIdentity(kf.transitionMatrix);
   cv::setIdentity(kf.measurementMatrix);
-  cv::setIdentity(kf.processNoiseCov, 1E-2);
+  cv::setIdentity(kf.processNoiseCov, 1E-4);
   cv::setIdentity(kf.measurementNoiseCov, 2.5);
   cv::setIdentity(kf.errorCovPre, 2.5);
 
