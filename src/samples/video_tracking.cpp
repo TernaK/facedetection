@@ -11,7 +11,7 @@ using namespace tkcv;
 void DrawBoxInImage(Point center, Size size, cv::Mat& image, cv::Scalar color=cv::Scalar(255,255,0)) {
   Point tl = Point(center.x-size.width/2, center.y-size.height/2);
   Point br = tl + Point(size.width, size.height);
-  rectangle(image, tl - Point(80,80), br + Point(80,80), color, 2);
+  rectangle(image, tl - Point(150,80), br + Point(150,80), color, 2);
 }
 
 int main(int argc, char *argv[]){
@@ -34,13 +34,17 @@ int main(int argc, char *argv[]){
   Size lastFaceSize;
   Point lastFaceCenter;
 
+  ChronoTime lastDetectionTime;// = chrono::system_clock::now();
+
   for(;;) {
     Mat frame;
     vCap >> frame;
+    cv::flip(frame, frame, 1);
     fd.detectFaces(frame, faces);
     bool faceDetected = faces.size() > 0;
 
     if(!faces.empty()) {
+      lastDetectionTime = chrono::system_clock::now();
       // fd.drawFaceRectInImage(faces[0], frame, Scalar(255,255,0), true, "#"+to_string(0));
       Measurement meas = Measurement(faces[0].center.first, faces[0].center.second);
 
@@ -64,12 +68,14 @@ int main(int argc, char *argv[]){
       // keep estimating the face location
       Measurement predicted = tracker->estimate();
 
-      // if a face was detected then show that
-      // if(faceDetected)
-      //   DrawBoxInImage(lastFaceCenter, lastFaceSize, frame, Scalar(0,255,0));
-      // otherwise show the estimated face location
-      // else
+      chrono::duration<float> sinceDetection = chrono::system_clock::now() - lastDetectionTime;
+      if(sinceDetection.count() < 0.5) 
         DrawBoxInImage(Point(predicted.data[0], predicted.data[1]), lastFaceSize, frame, Scalar(0,0,255));
+      else {
+        delete tracker;
+        tracker = nullptr;
+        startTracking = false;
+      }
     }
 
     faces.clear();

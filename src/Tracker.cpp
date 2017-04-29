@@ -20,7 +20,7 @@ Tracker::Tracker(Measurement initial, cv::Size frameSize) {
   cv::setIdentity(kf.measurementMatrix);
   cv::setIdentity(kf.processNoiseCov, 1E-4);
   cv::setIdentity(kf.measurementNoiseCov, 2.5);
-  cv::setIdentity(kf.errorCovPre, 2.5);
+  cv::setIdentity(kf.errorCovPre, 0.5);
 
   kf.statePost.at<float>(0) = initial.data[0];
   kf.statePost.at<float>(1) = initial.data[1];
@@ -37,16 +37,7 @@ float Tracker::getTimeDelta(ChronoTime atTime) {
 }
 
 void Tracker::update(Measurement meas) {
-  
-  ChronoTime now = chrono::system_clock::now();
-  float dt = getTimeDelta(now);
-  timer = now;
-  
-  // update transition matrix
-  kf.transitionMatrix.at<float>(0, 2) = dt; //dx
-  kf.transitionMatrix.at<float>(1, 3) = dt; //dx
-  
-  // update state
+  timer = chrono::system_clock::now();
   kf.correct(meas.toKalmanMeasurement());
 }
 
